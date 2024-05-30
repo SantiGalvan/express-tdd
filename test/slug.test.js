@@ -36,7 +36,7 @@ test('createSlug dovrebbe ritornare una stringa con gli spazi sostituiti da -', 
 
 // 4- createSlug dovrebbe incrementare di 1 lo slug quando esiste già
 test('createSlug dovrebbe incrementare di 1 lo slug quando esiste già', () => {
-    slugs = posts.map(post => post.slug);
-    slug = createSlug('Pasta barbabietola e gorgonzola', posts);
+    const slugs = posts.map(post => post.slug);
+    const slug = createSlug('Pasta barbabietola e gorgonzola', posts);
     expect(slugs.includes(slug)).toBe(false);
 });
