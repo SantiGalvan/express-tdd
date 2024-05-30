@@ -14,11 +14,16 @@ class Model {
     read() {
         return this.file;
     }
+
+    add() {
+        return 'Aggiungi elementi';
+    }
 }
 
 // 1- Model dovrebbe essere una classe
 test('Model dovrebbe essere una classe', () => {
     const model = new Model(posts);
+
     expect(model).toBeInstanceOf(Model);
 });
 
@@ -32,4 +37,11 @@ test('L\'istanza di model dovrebbe avere il metodo read', () => {
     const model = new Model(posts);
 
     expect(model.read()).toBeDefined();
+});
+
+// 4- L'istanza di model dovrebbe avere il metodo add
+test('L\'istanza di model dovrebbe avere il metodo add', () => {
+    const model = new Model(posts);
+
+    expect(model.add()).toBeDefined();
 });
