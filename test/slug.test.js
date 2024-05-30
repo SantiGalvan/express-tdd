@@ -3,24 +3,15 @@ const posts = require("../database/db.json");
 
 // Funzione da testare
 const createSlug = (title, list) => {
-    if (!title) {
-        throw new Error("Title è obbligatorio");
-    }
-    if (typeof title !== 'string') {
-        throw new Error('Title deve essere una stringa!');
-    }
 
-    if (!list) {
-        throw new Error('Inserisci la lista');
-    }
+    if (!title) throw new Error("Title è obbligatorio");
+    if (typeof title !== 'string') throw new Error('Title deve essere una stringa!');
+
+    if (!list) throw new Error('Inserisci la lista');
 
     let baseSlug = '';
 
-    if (title.includes(' ')) {
-        baseSlug = title.toLowerCase().replaceAll(' ', '-');
-    } else {
-        baseSlug = title.toLowerCase();
-    }
+    title.includes(' ') ? baseSlug = title.toLowerCase().replaceAll(' ', '-') : baseSlug = title.toLowerCase();
 
     const slugs = list.map(l => l.slug);
     let counter = 1;
@@ -30,28 +21,40 @@ const createSlug = (title, list) => {
         slug = `${baseSlug}-${counter}`;
         counter++;
     }
+
     return slug;
 }
 
 // 1- createSlug dovrebbe ritornare una stringa
 test('createSlug dovrebbe ritornare una stringa', () => {
-    expect(typeof createSlug('Pippo', posts)).toBe('string');
+
+    const slug = createSlug('Pippo', posts);
+
+    expect(typeof slug).toBe('string');
 });
 
 // 2- createSlug dovrebbe ritornare una stringa in lowercase
 test('createSlug dovrebbe ritornare una stringa in lowercase', () => {
-    expect(createSlug('Pippo', posts) === createSlug('Pippo', posts).toLowerCase()).toBe(true)
+
+    const slug = createSlug('Pippo', posts);
+
+    expect(slug === slug.toLowerCase()).toBe(true);
 });
 
 // 3- createSlug dovrebbe ritornare una stringa con gli spazi sostituiti da "-"
 test('createSlug dovrebbe ritornare una stringa con gli spazi sostituiti da -', () => {
-    expect(createSlug('Pippo Franco', posts)).toMatch('-');
+
+    const slug = createSlug('Pippo Franco', posts);
+
+    expect(slug).toMatch('-');
 });
 
 // 4- createSlug dovrebbe incrementare di 1 lo slug quando esiste già
 test('createSlug dovrebbe incrementare di 1 lo slug quando esiste già', () => {
     const slugs = posts.map(post => post.slug);
+
     const slug = createSlug('Pasta barbabietola e gorgonzola', posts);
+
     expect(slugs.includes(slug)).toBe(false);
 });
 
