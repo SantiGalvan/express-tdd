@@ -3,6 +3,12 @@ const posts = require("../database/db.json");
 
 // Funzione da testare
 const createSlug = (title, list) => {
+    if (!title) {
+        throw new Error("Title è obbligatorio");
+    }
+    if (typeof title !== 'string') {
+        throw new Error('Title deve essere una stringa!');
+    }
     let baseSlug = '';
     if (title.includes(' ')) {
         baseSlug = title.toLowerCase().replaceAll(' ', '-');
@@ -40,3 +46,10 @@ test('createSlug dovrebbe incrementare di 1 lo slug quando esiste già', () => {
     const slug = createSlug('Pasta barbabietola e gorgonzola', posts);
     expect(slugs.includes(slug)).toBe(false);
 });
+
+// 5- createSlug dovrebbe lanciare un errore in caso di titolo non presente o formato errato
+test('createSlug dovrebbe lanciare un errore in caso di titolo non presente o formato errato', () => {
+    expect(() => createSlug(45, posts)).toThrow();
+    expect(() => createSlug(undefined, posts)).toThrow();
+    expect(() => createSlug('', posts)).toThrow();
+})
