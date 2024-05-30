@@ -9,15 +9,23 @@ const createSlug = (title, list) => {
     if (typeof title !== 'string') {
         throw new Error('Title deve essere una stringa!');
     }
+
+    if (!list) {
+        throw new Error('Inserisci la lista');
+    }
+
     let baseSlug = '';
+
     if (title.includes(' ')) {
         baseSlug = title.toLowerCase().replaceAll(' ', '-');
     } else {
         baseSlug = title.toLowerCase();
     }
+
     const slugs = list.map(l => l.slug);
     let counter = 1;
     let slug = baseSlug;
+
     while (slugs.includes(slug)) {
         slug = `${baseSlug}-${counter}`;
         counter++;
@@ -53,3 +61,8 @@ test('createSlug dovrebbe lanciare un errore in caso di titolo non presente o fo
     expect(() => createSlug(undefined, posts)).toThrow();
     expect(() => createSlug('', posts)).toThrow();
 })
+
+// 6- createSlug dovrebbe lanciare un errore se manca l'array dei post
+test('createSlug dovrebbe lanciare un errore se manca l\'array dei post', () => {
+    expect(() => createSlug('Patatine fritte')).toThrow();
+});
