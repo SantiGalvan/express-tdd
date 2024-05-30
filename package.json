@@ -4,7 +4,8 @@
   "description": "Ciao ragazzi, esercizio di oggi: express-tdd\r ## Esercizio\r Impariamo a ragionare in ottica TDD e a scrivere i nostri Unit Tests.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "jest --watchAll"
   },
   "keywords": [],
   "author": "",
